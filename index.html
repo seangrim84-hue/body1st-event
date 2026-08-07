@@ -81,6 +81,21 @@
 
   .btn-primary:hover { background: var(--accent-deep); }
 
+  .btn-outline {
+    background: transparent;
+    color: var(--accent-deep);
+    border: 1px solid var(--line);
+    box-shadow: none;
+  }
+
+  .btn-outline:hover { background: var(--accent-soft); }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   .btn-sm {
     padding: 9px 18px;
     font-size: 0.85rem;
@@ -410,7 +425,10 @@
 <header>
   <div class="nav">
     <img src="assets/body1st_logo_black.png" alt="BODY1ST">
-    <button class="btn btn-primary btn-sm" id="surveyBtn">서베이 참여하기</button>
+    <div class="nav-actions">
+      <a class="btn btn-outline btn-sm" href="login.html">로그인</a>
+      <a class="btn btn-primary btn-sm" href="signup.html">회원가입</a>
+    </div>
   </div>
 </header>
 
@@ -558,7 +576,7 @@
   // 구글 폼 URL — 추후 실제 링크로 교체
   const GOOGLE_FORM_URL = "#";
 
-  ["surveyBtn", "mainCtaBtn", "finalCtaBtn"].forEach(id => {
+  ["mainCtaBtn", "finalCtaBtn"].forEach(id => {
     document.getElementById(id).addEventListener("click", () => {
       window.open(GOOGLE_FORM_URL, "_blank");
     });
