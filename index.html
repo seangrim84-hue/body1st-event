@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>체형분석운동지도자 교육대기신청 | BODY1ST</title>
+<style>
+  :root {
+    --bg: #faf7f8;
+    --bg-alt: #ffffff;
+    --ink: #201317;
+    --ink-soft: #6e5b62;
+    --accent: #9c1f4a;
+    --accent-soft: #f6e3ea;
+    --accent-deep: #6f1636;
+    --line: #ecdfe4;
+    --radius: 18px;
+    --shadow: 0 10px 30px rgba(32, 19, 23, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 247, 248, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .nav img {
+    height: 24px;
+    display: block;
+  }
+
+  .btn {
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+
+  .btn:active { transform: scale(0.97); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(156, 31, 74, 0.35);
+  }
+
+  .btn-primary:hover { background: var(--accent-deep); }
+
+  .btn-sm {
+    padding: 9px 18px;
+    font-size: 0.85rem;
+  }
+
+  .btn-big {
+    padding: 18px 36px;
+    font-size: 1.08rem;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 76px 24px 64px;
+    text-align: center;
+    background: linear-gradient(160deg, #fff 0%, var(--accent-soft) 100%);
+  }
+
+  .hero .eyebrow {
+    display: inline-block;
+    font-size: 0.82rem;
+    color: var(--accent-deep);
+    background: var(--accent-soft);
+    border: 1px solid var(--line);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 22px;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.7rem, 4.2vw, 2.5rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    font-weight: 800;
+  }
+
+  .hero h1 .highlight { color: var(--accent-deep); }
+
+  .hero .subcopy {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--accent-deep);
+    margin: 0 0 32px;
+  }
+
+  .hero .subcopy .arrow { color: var(--ink-soft); font-weight: 500; margin: 0 4px; }
+
+  /* Section shared */
+  section { padding: 60px 24px; }
+
+  .section-head {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 40px;
+  }
+
+  .section-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .section-head h2 {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+  }
+
+  .section-head p {
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    margin: 0;
+  }
+
+  /* Benefit cards */
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .benefit-card {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px 26px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  .benefit-card .rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    font-weight: 800;
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+  }
+
+  .benefit-card.first .rank { background: var(--accent); color: #fff; }
+
+  .benefit-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+  }
+
+  .benefit-card p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  .benefit-card .count {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent-deep);
+    background: var(--accent-soft);
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+
+  /* Steps */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .step-card {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 18px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .step-card .circle {
+    width: 38px;
+    height: 38px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .step-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.96rem;
+  }
+
+  .step-card p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+
+  /* Period highlight box */
+  .period-box {
+    max-width: 720px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #2a0f1a, #6f1636);
+    color: #fdf3f6;
+    border-radius: 24px;
+    padding: 40px 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    text-align: center;
+  }
+
+  @media (max-width: 560px) {
+    .period-box { grid-template-columns: 1fr; }
+  }
+
+  .period-box .item .label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #f2c9d8;
+    margin-bottom: 10px;
+  }
+
+  .period-box .item .value {
+    font-size: 1.15rem;
+    font-weight: 800;
+  }
+
+  .period-box .item .note {
+    font-size: 0.82rem;
+    color: rgba(253,243,246,0.75);
+    margin-top: 6px;
+  }
+
+  /* FAQ accordion */
+  .faq-box {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.96rem;
+    user-select: none;
+  }
+
+  .faq-q .arrow {
+    color: var(--accent-deep);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .faq-a p {
+    margin: 0;
+    padding: 0 22px 20px;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  /* Final CTA */
+  .final-cta {
+    text-align: center;
+    background: linear-gradient(135deg, var(--accent-soft), var(--bg));
+    border-radius: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 32px;
+  }
+
+  .final-cta h2 {
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    margin: 0 0 14px;
+    letter-spacing: -0.02em;
+  }
+
+  .final-cta p {
+    color: var(--ink-soft);
+    margin: 0 0 26px;
+    font-size: 0.94rem;
+  }
+
+  /* Footer */
+  footer {
+    background: #17090f;
+    color: rgba(253,243,246,0.65);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.82rem;
+  }
+
+  footer .foot-brand {
+    font-weight: 700;
+    color: #fdf3f6;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+
+  footer .foot-contact {
+    margin-bottom: 14px;
+  }
+
+  footer .foot-links a {
+    text-decoration: none;
+    color: rgba(253,243,246,0.75);
+  }
+
+  footer .foot-links span.sep {
+    margin: 0 8px;
+    color: rgba(253,243,246,0.35);
+  }
+
+  footer .foot-links a:hover { color: #fff; }
+
+  .placeholder-note {
+    font-size: 0.72rem;
+    color: rgba(253,243,246,0.4);
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <img src="assets/body1st_logo_black.png" alt="BODY1ST">
+    <button class="btn btn-primary btn-sm" id="surveyBtn">서베이 참여하기</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">체형분석운동지도자 교육대기신청</span>
+    <h1>근골격계 고통해결 솔루션,<br><span class="highlight">체형 안에 녹아든 틀어짐의 원인</span>을 찾아야 해결할 수 있습니다.</h1>
+    <p class="subcopy">체형분석운동지도자 교육대기신청<span class="arrow">&gt;</span>무료 수강권 1명 추첨</p>
+    <button class="btn btn-primary btn-big" id="mainCtaBtn">체형분석운동 지도자 교육대기신청</button>
+  </div>
+</section>
+
+<section id="benefits">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">Benefits</div>
+      <h2>대기신청하면 드리는 혜택</h2>
+      <p>교육대기신청을 완료한 모든 분께 추첨 기회가 주어져요.</p>
+    </div>
+    <div class="benefit-grid">
+      <div class="benefit-card first">
+        <div class="rank">1등</div>
+        <h3>무료 수강권</h3>
+        <p>체형분석운동지도자 교육 과정을 무료로 수강할 수 있는 기회예요.</p>
+        <span class="count">1명 추첨</span>
+      </div>
+      <div class="benefit-card">
+        <div class="rank">2등</div>
+        <h3>30% 할인 쿠폰</h3>
+        <p>교육 과정 등록 시 사용할 수 있는 할인 쿠폰을 드려요.</p>
+        <span class="count">100명 추첨</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">How To Join</div>
+      <h2>참여 방법 4단계</h2>
+      <p>아래 순서대로만 진행하면 자동으로 응모가 완료돼요.</p>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="circle">1</div>
+        <h4>페이지 둘러보기</h4>
+        <p>혜택과 교육 정보를 확인해요</p>
+      </div>
+      <div class="step-card">
+        <div class="circle">2</div>
+        <h4>버튼 클릭</h4>
+        <p>교육대기신청 버튼을 눌러요</p>
+      </div>
+      <div class="step-card">
+        <div class="circle">3</div>
+        <h4>교육 대기신청</h4>
+        <p>새 창에서 신청 폼을 작성해요</p>
+      </div>
+      <div class="step-card">
+        <div class="circle">4</div>
+        <h4>자동 응모</h4>
+        <p>신청 완료 시 추첨에 자동 응모돼요</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">Schedule</div>
+      <h2>응모 기간 · 당첨자 발표</h2>
+      <p>아래 일정은 추후 확정되는 대로 업데이트돼요.</p>
+    </div>
+    <div class="period-box">
+      <div class="item">
+        <div class="label">응모 기간</div>
+        <div class="value">YYYY.MM.DD ~ YYYY.MM.DD</div>
+        <div class="note">※ 확정 전 (추후 업데이트)</div>
+      </div>
+      <div class="item">
+        <div class="label">당첨자 발표</div>
+        <div class="value">YYYY.MM.DD</div>
+        <div class="note">※ 발표 방식 추후 확정 (예: 개별 안내)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background: var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">FAQ</div>
+      <h2>자주 묻는 질문</h2>
+      <p>응모 전 궁금한 점을 미리 확인해보세요.</p>
+    </div>
+    <div class="faq-box">
+      <div class="faq-item">
+        <div class="faq-q"><span>응모 자격이 따로 있나요?</span><span class="arrow">▾</span></div>
+        <div class="faq-a"><p>내용 추후 업데이트예정입니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>중복으로 응모해도 되나요?</span><span class="arrow">▾</span></div>
+        <div class="faq-a"><p>내용 추후 업데이트예정입니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>입력한 개인정보는 어떻게 쓰이나요?</span><span class="arrow">▾</span></div>
+        <div class="faq-a"><p>내용 추후 업데이트예정입니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>당첨되면 어떻게 안내받나요?</span><span class="arrow">▾</span></div>
+        <div class="faq-a"><p>내용 추후 업데이트예정입니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>교육대기신청은 실제 교육 등록인가요?</span><span class="arrow">▾</span></div>
+        <div class="faq-a"><p>내용 추후 업데이트예정입니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="final-cta">
+      <h2>지금 체형분석운동지도자 교육 대기신청하고<br>무료 수강권 받아가세요</h2>
+      <p>버튼을 누르면 새 창에서 교육대기신청 폼으로 이동해요.</p>
+      <button class="btn btn-primary btn-big" id="finalCtaBtn">체형분석운동 지도자 교육대기신청</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-brand">바디퍼스트 (www.bofiron.com)</div>
+  <div class="foot-contact">교육전용 연락처 070-7722-7899 / 010-2855-4268</div>
+  <div class="foot-links">
+    <a href="#">이용약관</a>
+    <span class="sep">|</span>
+    <a href="#">개인정보 처리방침</a>
+  </div>
+  <div class="placeholder-note">※ 이용약관 · 개인정보 처리방침 링크는 추후 연결 예정입니다.</div>
+</footer>
+
+<script>
+  // 구글 폼 URL — 추후 실제 링크로 교체
+  const GOOGLE_FORM_URL = "#";
+
+  ["surveyBtn", "mainCtaBtn", "finalCtaBtn"].forEach(id => {
+    document.getElementById(id).addEventListener("click", () => {
+      window.open(GOOGLE_FORM_URL, "_blank");
+    });
+  });
+
+  // FAQ 아코디언
+  document.querySelectorAll(".faq-item").forEach(item => {
+    const q = item.querySelector(".faq-q");
+    const a = item.querySelector(".faq-a");
+    q.addEventListener("click", () => {
+      const isOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item").forEach(other => {
+        other.classList.remove("open");
+        other.querySelector(".faq-a").style.maxHeight = null;
+      });
+      if (!isOpen) {
+        item.classList.add("open");
+        a.style.maxHeight = a.scrollHeight + "px";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
