@@ -203,6 +203,7 @@
 <script>
   const SUPABASE_URL = "https://nqxncpwwcgyaanrehibs.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xeG5jcHd3Y2d5YWFucmVoaWJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwOTYyNjEsImV4cCI6MjEwMTY3MjI2MX0.Xczq_wIwH5seetFo0LdbPLFXo5zUlII2Ij3Hej8p91E";
+  const ADMIN_EMAIL = "admin@admin.com";
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const loginView = document.getElementById("loginView");
@@ -226,6 +227,10 @@
   async function checkSession() {
     const { data } = await supabaseClient.auth.getSession();
     if (data.session) {
+      if (data.session.user.email === ADMIN_EMAIL) {
+        window.location.href = "admin.html";
+        return;
+      }
       showWelcome(data.session.user);
     }
   }
@@ -246,6 +251,11 @@
 
     if (error) {
       showMsg("이메일 또는 비밀번호가 올바르지 않아요.", "error");
+      return;
+    }
+
+    if (data.user.email === ADMIN_EMAIL) {
+      window.location.href = "admin.html";
       return;
     }
 
