@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로그인 | BODY1ST</title>
+<style>
+  :root {
+    --bg: #faf7f8;
+    --bg-alt: #ffffff;
+    --ink: #201317;
+    --ink-soft: #6e5b62;
+    --accent: #9c1f4a;
+    --accent-soft: #f6e3ea;
+    --accent-deep: #6f1636;
+    --line: #ecdfe4;
+    --radius: 18px;
+    --shadow: 0 10px 30px rgba(32, 19, 23, 0.08);
+    --danger: #c0392b;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: linear-gradient(160deg, #fff 0%, var(--accent-soft) 100%);
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 24px;
+  }
+
+  a { color: inherit; }
+
+  .card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px 32px;
+  }
+
+  .brand {
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent-deep);
+    margin-bottom: 6px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.3rem;
+    margin: 0 0 28px;
+    letter-spacing: -0.02em;
+  }
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--ink-soft);
+  }
+
+  .field { margin-bottom: 18px; }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    font-size: 0.95rem;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: inherit;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 999px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(156, 31, 74, 0.35);
+    transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+    margin-top: 8px;
+  }
+
+  .btn:hover { background: var(--accent-deep); }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--accent-deep);
+    border: 1px solid var(--line);
+    box-shadow: none;
+  }
+
+  .btn-outline:hover { background: var(--accent-soft); }
+
+  .msg {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    display: none;
+  }
+
+  .msg.show { display: block; }
+  .msg.error { background: #fdecea; color: var(--danger); }
+  .msg.success { background: #e9f7ef; color: #1e7d43; }
+
+  .switch {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .switch a {
+    color: var(--accent-deep);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .switch a:hover { text-decoration: underline; }
+
+  /* Logged-in view */
+  .welcome { display: none; text-align: center; }
+  .welcome.show { display: block; }
+  .welcome .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 0 auto 16px;
+  }
+  .welcome p { color: var(--ink-soft); font-size: 0.9rem; margin: 0 0 24px; word-break: break-all; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="brand">BODY1ST</div>
+
+  <div id="loginView">
+    <h1>로그인</h1>
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">이메일</label>
+        <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" placeholder="비밀번호" required autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">로그인</button>
+
+      <div class="msg" id="msgBox"></div>
+    </form>
+
+    <div class="switch">
+      아직 계정이 없으신가요? <a href="signup.html">회원가입</a>
+    </div>
+  </div>
+
+  <div id="welcomeView" class="welcome">
+    <div class="avatar" id="avatarLetter">?</div>
+    <h1 style="margin-bottom:8px;">환영합니다!</h1>
+    <p id="userEmail"></p>
+    <button class="btn" id="goHomeBtn">이벤트 페이지로 이동</button>
+    <button class="btn btn-outline" id="logoutBtn" style="margin-top:10px;">로그아웃</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://nqxncpwwcgyaanrehibs.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xeG5jcHd3Y2d5YWFucmVoaWJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwOTYyNjEsImV4cCI6MjEwMTY3MjI2MX0.Xczq_wIwH5seetFo0LdbPLFXo5zUlII2Ij3Hej8p91E";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const loginView = document.getElementById("loginView");
+  const welcomeView = document.getElementById("welcomeView");
+  const form = document.getElementById("loginForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const msgBox = document.getElementById("msgBox");
+
+  function showMsg(text, type) {
+    msgBox.textContent = text;
+    msgBox.className = "msg show " + type;
+  }
+
+  function showWelcome(user) {
+    loginView.style.display = "none";
+    welcomeView.classList.add("show");
+    document.getElementById("userEmail").textContent = user.email;
+    document.getElementById("avatarLetter").textContent = user.email.charAt(0).toUpperCase();
+  }
+
+  async function checkSession() {
+    const { data } = await supabaseClient.auth.getSession();
+    if (data.session) {
+      showWelcome(data.session.user);
+    }
+  }
+  checkSession();
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "로그인 중...";
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "로그인";
+
+    if (error) {
+      if (error.message.includes("Email not confirmed")) {
+        showMsg("이메일 인증이 아직 완료되지 않았어요. 메일함을 확인해주세요.", "error");
+      } else {
+        showMsg("이메일 또는 비밀번호가 올바르지 않아요.", "error");
+      }
+      return;
+    }
+
+    showWelcome(data.user);
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    welcomeView.classList.remove("show");
+    loginView.style.display = "block";
+    form.reset();
+  });
+
+  document.getElementById("goHomeBtn").addEventListener("click", () => {
+    window.location.href = "event.html";
+  });
+</script>
+
+</body>
+</html>
