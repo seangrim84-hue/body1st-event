@@ -159,7 +159,6 @@
     <div class="field">
       <label for="passwordConfirm">비밀번호 확인</label>
       <input type="password" id="passwordConfirm" placeholder="비밀번호를 다시 입력해주세요" required minlength="6" autocomplete="new-password">
-      <div class="hint">가입 완료 후 인증 메일이 발송돼요. 메일함에서 확인 링크를 눌러야 로그인할 수 있어요.</div>
     </div>
 
     <button type="submit" class="btn" id="submitBtn">회원가입</button>
@@ -201,13 +200,7 @@
     submitBtn.disabled = true;
     submitBtn.textContent = "가입 처리 중...";
 
-    const { data, error } = await supabaseClient.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: new URL("login.html", window.location.href).href
-      }
-    });
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
 
     submitBtn.disabled = false;
     submitBtn.textContent = "회원가입";
@@ -217,8 +210,10 @@
       return;
     }
 
-    showMsg("가입 신청이 완료됐어요. 입력하신 이메일로 발송된 인증 메일의 링크를 눌러 인증을 완료해주세요.", "success");
-    form.reset();
+    showMsg("가입이 완료됐어요. 로그인 페이지로 이동할게요.", "success");
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1200);
   });
 </script>
 

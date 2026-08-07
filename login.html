@@ -244,11 +244,7 @@
     submitBtn.textContent = "로그인";
 
     if (error) {
-      if (error.message.includes("Email not confirmed")) {
-        showMsg("이메일 인증이 아직 완료되지 않았어요. 메일함을 확인해주세요.", "error");
-      } else {
-        showMsg("이메일 또는 비밀번호가 올바르지 않아요.", "error");
-      }
+      showMsg("이메일 또는 비밀번호가 올바르지 않아요.", "error");
       return;
     }
 
