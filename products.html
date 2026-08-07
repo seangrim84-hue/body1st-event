@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>교육 상품 | BODY1ST</title>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html"><img src="assets/body1st_logo_black.png" alt="BODY1ST"></a>
+    <div class="nav-links" id="navLinks"></div>
+  </div>
+</header>
+
+<div class="page-head">
+  <h1>교육 상품</h1>
+  <p>지금 신청 가능한 BODY1ST 교육 과정이에요.</p>
+</div>
+
+<section>
+  <div id="courseGrid" class="card-grid">
+    <p class="spinner-note">불러오는 중...</p>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://js.tosspayments.com/v1/payment"></script>
+<script src="app.js"></script>
+<script>
+  // 토스페이먼츠 테스트 클라이언트 키가 발급되면 이 값을 채워주세요.
+  const TOSS_CLIENT_KEY = "";
+
+  let currentUser = null;
+
+  async function loadCourses() {
+    const { data: courses, error } = await supabaseClient
+      .from("courses")
+      .select("id, title, description, price")
+      .eq("is_active", true)
+      .order("created_at", { ascending: true });
+
+    const grid = document.getElementById("courseGrid");
+
+    if (error) {
+      grid.innerHTML = `<p class="spinner-note">상품을 불러오지 못했어요.</p>`;
+      return;
+    }
+    if (!courses.length) {
+      grid.innerHTML = `<div class="empty-state">아직 등록된 교육 상품이 없어요.</div>`;
+      return;
+    }
+
+    grid.innerHTML = courses
+      .map(
+        (c) => `
+        <div class="course-card">
+          <h3>${c.title}</h3>
+          <p>${c.description ?? ""}</p>
+          <div class="price">${formatWon(c.price)}</div>
+          <button class="btn btn-primary" data-course-id="${c.id}" data-price="${c.price}" data-title="${c.title}" ${TOSS_CLIENT_KEY ? "" : "disabled"}>
+            ${TOSS_CLIENT_KEY ? "구매하기" : "결제 연동 준비 중"}
+          </button>
+          ${TOSS_CLIENT_KEY ? "" : '<div class="notice">토스페이먼츠 키 설정 후 구매가 가능해요.</div>'}
+        </div>`
+      )
+      .join("");
+
+    grid.querySelectorAll("button[data-course-id]").forEach((btn) => {
+      btn.addEventListener("click", () => handlePurchase(btn));
+    });
+  }
+
+  async function handlePurchase(btn) {
+    if (!currentUser) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const courseId = btn.dataset.courseId;
+    const amount = Number(btn.dataset.price);
+    const title = btn.dataset.title;
+    const orderId = "order_" + crypto.randomUUID();
+
+    btn.disabled = true;
+    btn.textContent = "처리 중...";
+
+    const { error: insertError } = await supabaseClient.from("orders").insert({
+      user_id: currentUser.id,
+      course_id: courseId,
+      order_id: orderId,
+      amount,
+      status: "pending",
+    });
+
+    if (insertError) {
+      alert("주문 생성에 실패했어요. 다시 시도해주세요.");
+      btn.disabled = false;
+      btn.textContent = "구매하기";
+      return;
+    }
+
+    const base = window.location.href.replace(/products\.html.*$/, "");
+    const tossPayments = TossPayments(TOSS_CLIENT_KEY);
+    tossPayments.requestPayment("카드", {
+      amount,
+      orderId,
+      orderName: title,
+      customerName: currentUser.email,
+      successUrl: base + "payment-success.html",
+      failUrl: base + "payment-fail.html",
+    });
+  }
+
+  (async () => {
+    currentUser = await renderNav([{ name: "내 결제내역", href: "mypage.html" }]);
+    await loadCourses();
+  })();
+</script>
+
+</body>
+</html>

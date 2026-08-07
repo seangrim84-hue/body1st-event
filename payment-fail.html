@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결제 실패 | BODY1ST</title>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html"><img src="assets/body1st_logo_black.png" alt="BODY1ST"></a>
+    <div class="nav-links" id="navLinks"></div>
+  </div>
+</header>
+
+<div class="center-card">
+  <h1>결제가 완료되지 않았어요</h1>
+  <p id="message">결제가 취소되었거나 실패했어요.</p>
+  <a class="btn btn-primary" href="products.html">다시 시도하기</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+  (async () => {
+    await renderNav([{ name: "내 결제내역", href: "mypage.html" }]);
+
+    const params = new URLSearchParams(window.location.search);
+    const message = params.get("message");
+    if (message) {
+      document.getElementById("message").textContent = message;
+    }
+  })();
+</script>
+
+</body>
+</html>

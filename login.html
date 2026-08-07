@@ -193,7 +193,8 @@
     <div class="avatar" id="avatarLetter">?</div>
     <h1 style="margin-bottom:8px;">환영합니다!</h1>
     <p id="userEmail"></p>
-    <button class="btn" id="goHomeBtn">이벤트 페이지로 이동</button>
+    <button class="btn" id="goProductsBtn">강좌 보러가기</button>
+    <button class="btn btn-outline" id="goHomeBtn" style="margin-top:10px;">이벤트 페이지로 이동</button>
     <button class="btn btn-outline" id="logoutBtn" style="margin-top:10px;">로그아웃</button>
   </div>
 </div>
@@ -258,8 +259,12 @@
     form.reset();
   });
 
+  document.getElementById("goProductsBtn").addEventListener("click", () => {
+    window.location.href = "products.html";
+  });
+
   document.getElementById("goHomeBtn").addEventListener("click", () => {
-    window.location.href = "event.html";
+    window.location.href = "index.html";
   });
 </script>
 

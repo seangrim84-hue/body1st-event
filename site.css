@@ -1,0 +1,205 @@
+:root {
+  --bg: #faf7f8;
+  --bg-alt: #ffffff;
+  --ink: #201317;
+  --ink-soft: #6e5b62;
+  --accent: #9c1f4a;
+  --accent-soft: #f6e3ea;
+  --accent-deep: #6f1636;
+  --line: #ecdfe4;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(32, 19, 23, 0.08);
+  --danger: #c0392b;
+  --success-bg: #e9f7ef;
+  --success-ink: #1e7d43;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+a { color: inherit; }
+
+.wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 247, 248, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.nav img { height: 24px; display: block; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.nav-links a:not(.btn) { color: var(--ink-soft); text-decoration: none; }
+.nav-links a:not(.btn):hover { color: var(--accent-deep); }
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(156, 31, 74, 0.35);
+}
+.btn-primary:hover:not(:disabled) { background: var(--accent-deep); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent-deep);
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+.btn-outline:hover { background: var(--accent-soft); }
+
+.btn-sm { padding: 9px 18px; font-size: 0.85rem; }
+
+.page-head {
+  padding: 48px 24px 32px;
+  text-align: center;
+}
+
+.page-head h1 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+.page-head p { color: var(--ink-soft); margin: 0; }
+
+section { padding: 0 24px 72px; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.course-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+}
+
+.course-card h3 { margin: 0 0 10px; font-size: 1.2rem; }
+.course-card p { margin: 0 0 20px; color: var(--ink-soft); font-size: 0.92rem; }
+
+.course-card .price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--accent-deep);
+  margin-bottom: 20px;
+}
+
+.notice {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: 10px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.data-table th, .data-table td {
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.data-table th {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.badge-paid { background: var(--success-bg); color: var(--success-ink); }
+.badge-pending { background: var(--accent-soft); color: var(--accent-deep); }
+
+.empty-state {
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 40px 20px;
+  background: var(--bg-alt);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.center-card {
+  max-width: 480px;
+  margin: 60px auto;
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 44px 36px;
+  text-align: center;
+}
+
+.center-card h1 { font-size: 1.35rem; margin: 0 0 14px; }
+.center-card p { color: var(--ink-soft); font-size: 0.92rem; margin: 0 0 24px; }
+
+.spinner-note { text-align: center; color: var(--ink-soft); padding: 60px 20px; }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 결제내역 | BODY1ST</title>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html"><img src="assets/body1st_logo_black.png" alt="BODY1ST"></a>
+    <div class="nav-links" id="navLinks"></div>
+  </div>
+</header>
+
+<div class="page-head">
+  <h1>내 결제내역</h1>
+  <p>지금까지 신청한 교육의 결제 상태예요.</p>
+</div>
+
+<section>
+  <div class="wrap" id="content">
+    <p class="spinner-note">불러오는 중...</p>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+  (async () => {
+    const user = await renderNav([{ name: "내 결제내역", href: "mypage.html" }]);
+    const content = document.getElementById("content");
+
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const { data: orders, error } = await supabaseClient
+      .from("orders")
+      .select("amount, status, created_at, courses(title)")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      content.innerHTML = `<p class="spinner-note">결제내역을 불러오지 못했어요.</p>`;
+      return;
+    }
+
+    if (!orders.length) {
+      content.innerHTML = `<div class="empty-state">아직 결제 내역이 없어요. <a href="products.html">강좌 보러가기</a></div>`;
+      return;
+    }
+
+    const rows = orders
+      .map(
+        (o) => `
+        <tr>
+          <td>${o.courses ? o.courses.title : "-"}</td>
+          <td>${formatWon(o.amount)}</td>
+          <td><span class="badge ${o.status === "paid" ? "badge-paid" : "badge-pending"}">${o.status === "paid" ? "결제완료" : "대기중"}</span></td>
+          <td>${formatDate(o.created_at)}</td>
+        </tr>`
+      )
+      .join("");
+
+    content.innerHTML = `
+      <table class="data-table">
+        <thead>
+          <tr><th>강좌명</th><th>금액</th><th>상태</th><th>신청일</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  })();
+</script>
+
+</body>
+</html>

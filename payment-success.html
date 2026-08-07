@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결제 확인 중 | BODY1ST</title>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html"><img src="assets/body1st_logo_black.png" alt="BODY1ST"></a>
+    <div class="nav-links" id="navLinks"></div>
+  </div>
+</header>
+
+<div class="center-card">
+  <h1 id="title">결제를 확인하고 있어요...</h1>
+  <p id="message">잠시만 기다려주세요.</p>
+  <a class="btn btn-primary" id="actionBtn" href="mypage.html" style="display:none;">내 결제내역 보기</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+  function setResult(title, message, showBtn) {
+    document.getElementById("title").textContent = title;
+    document.getElementById("message").textContent = message;
+    document.getElementById("actionBtn").style.display = showBtn ? "inline-block" : "none";
+  }
+
+  (async () => {
+    await renderNav([{ name: "내 결제내역", href: "mypage.html" }]);
+
+    const params = new URLSearchParams(window.location.search);
+    const paymentKey = params.get("paymentKey");
+    const orderId = params.get("orderId");
+    const amount = Number(params.get("amount"));
+
+    if (!paymentKey || !orderId || !amount) {
+      setResult("결제 정보를 확인할 수 없어요", "결제 진행 중 필요한 정보가 누락됐어요. 다시 시도해주세요.", false);
+      return;
+    }
+
+    const { data, error } = await supabaseClient.functions.invoke("confirm-payment", {
+      body: { paymentKey, orderId, amount },
+    });
+
+    if (error || !data || data.error) {
+      setResult("결제 확인에 실패했어요", "결제 승인 중 문제가 발생했어요. 내 결제내역에서 상태를 다시 확인해주세요.", true);
+      return;
+    }
+
+    setResult("결제가 완료됐어요!", "신청하신 교육 결제가 정상적으로 처리됐어요.", true);
+  })();
+</script>
+
+</body>
+</html>
